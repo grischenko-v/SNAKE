@@ -3,8 +3,10 @@ $(function(){
    var nextPoint;
    var tempPoint;
    var prevPoint  = $("#first");
-
-
+  
+   var rowSize = 9;
+   var currentPositionX = 4; 
+   var currentPositionY = 7;
 
 $(document).keypress(function(e) {
 
@@ -14,6 +16,10 @@ $(document).keypress(function(e) {
 
     prevPoint.css("background-color", "#ccc");
     nextPoint = prevPoint.prev();
+    if(nextPoint.length == 0)console.log(nextPoint);
+    
+    if(currentPositionX <=0 )currentPositionX--;
+
     tempPoint = nextPoint; 
     prevPoint = tempPoint;
     nextPoint.css("background-color", "#777");
