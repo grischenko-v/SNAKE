@@ -4,9 +4,9 @@ $(function(){
    var tempPoint;
    var prevPoint  = $("#first");
   
-   var rowSize = 9;
-   var currentPositionX = 4; 
-   var currentPositionY = 7;
+   var rowSize = 8;
+   var currentPositionX = 3; 
+   var currentPositionY = 6;
 
 $(document).keypress(function(e) {
 
@@ -15,10 +15,19 @@ $(document).keypress(function(e) {
     console.log("left");
 
     prevPoint.css("background-color", "#ccc");
-    nextPoint = prevPoint.prev();
-    if(nextPoint.length == 0)console.log(nextPoint);
+   
+    //if(nextPoint.length == 0)console.log(nextPoint);
     
-    if(currentPositionX <=0 )currentPositionX--;
+    if(currentPositionX > 0  &&  currentPositionX < rowSize){ currentPositionX--;  nextPoint = prevPoint.prev();}
+
+    else{
+    	currentPositionX = rowSize - 1;
+    	for(var i = 0; i < rowSize ; i++) nextPoint = nextPoint.next();
+    } 
+
+  console.log(currentPositionX);
+       
+
 
     tempPoint = nextPoint; 
     prevPoint = tempPoint;
