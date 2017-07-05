@@ -10,25 +10,17 @@ $(function(){
 
 $(document).keypress(function(e) {
 
-
    if(e.keyCode === 37 || e.which ===37){
     console.log("left");
-
-    prevPoint.css("background-color", "#ccc");
-   
-    //if(nextPoint.length == 0)console.log(nextPoint);
-    
-    if(currentPositionX > 0  &&  currentPositionX < rowSize){ currentPositionX--;  nextPoint = prevPoint.prev();}
-
-    else{
-    	currentPositionX = rowSize - 1;
+    prevPoint.css("background-color", "#ccc");      
+    if(currentPositionX > 0  &&  currentPositionX <= rowSize){
+        currentPositionX--;  
+        nextPoint = prevPoint.prev();
+    }else{
+    	currentPositionX = rowSize ;
     	for(var i = 0; i < rowSize ; i++) nextPoint = nextPoint.next();
     } 
-
-  console.log(currentPositionX);
-       
-
-
+    console.log(currentPositionX);
     tempPoint = nextPoint; 
     prevPoint = tempPoint;
     nextPoint.css("background-color", "#777");
@@ -41,10 +33,20 @@ $(document).keypress(function(e) {
    }//up
    */
    if(e.keyCode === 39 || e.which ===39){
-    console.log("right");
-    
+   	console.log("right");
+
     prevPoint.css("background-color", "#ccc");
-    nextPoint = prevPoint.next();
+     if(currentPositionX >= 0  &&  currentPositionX < rowSize){ currentPositionX++;  nextPoint = prevPoint.next();}
+
+    else{
+    	currentPositionX = 0;
+    	for(var i = 0; i < rowSize ; i++) nextPoint = nextPoint.prev();
+    } 
+
+  console.log(currentPositionX);
+       
+
+
     tempPoint = nextPoint; 
     prevPoint = tempPoint;
     nextPoint.css("background-color", "#777");
