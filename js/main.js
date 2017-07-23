@@ -7,6 +7,8 @@ var speed = 35;
 var fps = 1000 / speed;
 var frameNum = 0;
 var direction = "UP";//initial direction
+var controls = new snakeControl();
+
 
 function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
    this.path = aPath;
@@ -35,76 +37,16 @@ if(frameNum > fps){
   for(var i = 0; i < snakeArr.length; i++){ 
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
-       case "UP":    snakeArr[i] = upMove(snakeArr[i] );    break;
-       case "DOWN":  snakeArr[i] = downMove(snakeArr[i] );  break;
-       case "RIGHT": snakeArr[i] = rightMove(snakeArr[i] ); break;
-       case "LEFT":  snakeArr[i] = leftMove(snakeArr[i] );  break;
+       case "UP":    snakeArr[i] = controls.upMove(snakeArr[i] );    break;
+       case "DOWN":  snakeArr[i] = controls.downMove(snakeArr[i] );  break;
+       case "RIGHT": snakeArr[i] = controls.rightMove(snakeArr[i] ); break;
+       case "LEFT":  snakeArr[i] = controls.leftMove(snakeArr[i] );  break;
      }     
      snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
   }
  } else  frameNum++;
  requestAnimationFrame(snakeMove);
-};
-
-function rightMove(element){     
-    if(element.currentCol < colSize){
-      element.currentCol++; 
-      element.path = element.path.nextElementSibling;  
-    }else while(element.currentCol !== 0) {
-      element.currentCol--;     
-      element.path = element.path.previousElementSibling;
-    }
-    return element;
-};
-
-function leftMove(element){
-    if(element.currentCol > 0){
-      element.currentCol--; 
-      element.path = element.path.previousElementSibling;  
-    }else while(element.currentCol !== colSize) {
-      element.currentCol++;     
-      element.path = element.path.nextElementSibling;
-    }
-    return element;
-};
-
-function upMove(element){
- var i = 0;
- if(element.currentRow > 0){
-    while (i <= rowSize){ 
-      i++;     
-      element.path = element.path.previousElementSibling;  
-    }
-    element.currentRow--;
- }
- else{
-   while (i <= rowSize * (rowSize +  1) - 1){ 
-      i++;
-        element.path = element.path.nextElementSibling;
-  }
-  element.currentRow = 8;
- }   
- return element;
-};
-
-function downMove(element){
- var i = 0;
- if(element.currentRow < rowSize){
-    while (i <= rowSize){ 
-      i++;      
-      element.path = element.path.nextElementSibling;  
-    }
-    element.currentRow++;
- }
- else{
-   while (i <= rowSize*(rowSize + 1) - 1){ 
-      i++;
-        element.path = element.path.previousElementSibling;
-  }
-  element.currentRow = 0;
- }   
- return element;
 };
 
 function cooseDir(e){
@@ -119,17 +61,17 @@ function cooseDir(e){
 function init(){    
    snakeInit();  
    createPoint(); 
+
    document.addEventListener("keydown", cooseDir, false);
    requestAnimationFrame(snakeMove);
 };
 
 function createPoint(){
-  var pointRow = getRandomInt(0, 8);
-  var pointCol = getRandomInt(0, 8);
+  var pointRow = getRandomInt(0, 0);
+  var pointCol = getRandomInt(0, 0);
   var i = 0;
   var point = grid.firstElementChild;
   console.log("pointRow: " + pointRow + " pointCol: " + pointCol);
-  console.log(point);
   while(i < (pointRow + 1) * (pointCol + 1) ){
    point = point.nextElementSibling;
    i++;
