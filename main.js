@@ -3,7 +3,27 @@ $(function(){
    var nextPoint;
    var tempPoint;
    var prevPoint  = $("#first");
-  
+
+   var prevState = [$("#first"), $("#second"), $("#third")]; 
+  console.log(prevState);
+prevState = prevState.map( function (snakeElement){
+            
+             
+            return snakeElement.next();
+    
+          });
+
+
+
+ console.log(prevState);
+
+   function moveNext(snakeElements){
+      return snakeElements.map( function (snakeElement){
+            snakeElement.next();
+          }
+       	);       
+   }
+
    var rowSize = 8;
    var currentPositionX = 3; 
    var currentPositionY = 6;
