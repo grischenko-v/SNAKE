@@ -8,19 +8,21 @@ var direction = "UP";
 var rowSize = 8;
 var colSize = 8;
 
-var curentRow = 2;
+var currentRow = 2;
 var currentCol = 3;
-
 
 function simpleMove(){  
    if(frameNum > fps){
 	   first.style.backgroundColor = "#ccc";       
-
-      // first = first.nextElementSibling != null ? first.nextElementSibling : grid.firstElementChild;
-      first = leftMove(first);
-
-       first.style.backgroundColor="#777";
-       frameNum=0;
+   
+     switch(direction){
+       case "UP":    first = upMove(first);    break;
+       case "DOWN":  first = downMove(first);  break;
+       case "RIGHT": first = rightMove(first); break;
+       case "LEFT":  first = leftMove(first);  break;
+     }
+     first.style.backgroundColor="#777";
+     frameNum=0;
    } else  frameNum++;
      requestAnimationFrame(simpleMove);
 };
@@ -37,8 +39,6 @@ function rightMove(element){
     return element;
 };
 
-
-
 function leftMove(element){
     if(currentCol > 0){
       currentCol--; 
@@ -51,19 +51,49 @@ function leftMove(element){
 };
 
 function upMove(element){
-
+ var i = 0;
+ if(currentRow > 0){
+    while (i <= rowSize){ 
+      i++;     
+      element = element.previousElementSibling;  
+    }
+    currentRow--;
+ }
+ else{
+   while (i <= rowSize * (rowSize +  1) - 1){ 
+      i++;
+        element = element.nextElementSibling;
+  }
+  currentRow = 8;
+ }   
+ return element;
 };
 
 function downMove(element){
-
+ var i = 0;
+ if(currentRow < rowSize){
+    while (i <= rowSize){ 
+      i++;      
+      element = element.nextElementSibling;  
+    }
+    currentRow++;
+ }
+ else{
+   while (i <= rowSize*(rowSize + 1) - 1){ 
+      i++;
+        element = element.previousElementSibling;
+  }
+  currentRow = 0;
+ }   
+ return element;
 };
 
 function cooseDir(e){   
    switch(e.key){
-    case "ArrowUp": direction = "UP"; console.log("UP"); break;
-    case "ArrowDown": direction = "DOWN"; console.log("DOWN"); break;
-    case "ArrowRight": direction = "RIGHT"; console.log("RIGHT"); break;
-    case "ArrowLeft" : direction = "LEFT"; console.log("LEFT"); break;
+    case "ArrowUp":    direction = "UP";    break;
+    case "ArrowDown":  direction = "DOWN";  break;
+    case "ArrowRight": direction = "RIGHT"; break;
+    case "ArrowLeft":  direction = "LEFT";  break;
    }
 }
 
