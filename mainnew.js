@@ -1,3 +1,6 @@
+//grid size
+var rowSize = 8;
+var colSize = 8;
 
 var snakeArr = [];
 
@@ -22,37 +25,24 @@ var third = {
    currentDir: "UP"
 };
 
-
 snakeArr.push(first);
 snakeArr.push(second);
-//snakeArr.push(third);
-
+snakeArr.push(third);
 
 var grid = document.getElementsByClassName('grid')[0];
 var fps = 1000/30;
 var frameNum = 0;
 var direction = "UP";
 
-
-var rowSize = 8;
-var colSize = 8;
-
-
-function setDirection(){
-  
-  for(var i = 1; i < snakeArr.length; i++ ){
-   snakeArr[i].currentDir = snakeArr[i-1].currentDir;
-   console.log(snakeArr[i].currentDir);
-  }
-   snakeArr[0].currentDir = direction;
+function setDirection(){   
+  for(var i = snakeArr.length -1; i > 0; i-- )  snakeArr[i].currentDir = snakeArr[i-1].currentDir;
+  snakeArr[0].currentDir = direction;
 }
-
 
 function snakeMove(){
 if(frameNum > fps){
-    setDirection();
+  setDirection();
   for(var i = 0; i < snakeArr.length; i++){ 
-
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
        case "UP":    snakeArr[i] = upMove(snakeArr[i] );    break;
@@ -62,16 +52,12 @@ if(frameNum > fps){
      }     
      snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
-
   }
  } else  frameNum++;
-
  requestAnimationFrame(snakeMove);
-
 };
 
-function rightMove(element){   
-      console.log("move");
+function rightMove(element){     
     if(element.currentCol < colSize){
       element.currentCol++; 
       element.path = element.path.nextElementSibling;  
@@ -131,15 +117,14 @@ function downMove(element){
  return element;
 };
 
-function cooseDir(e){  
-
+function cooseDir(e){
    switch(e.key){
     case "ArrowUp":   if(direction != "DOWN")  direction = "UP";    break;
     case "ArrowDown": if(direction != "UP")    direction = "DOWN";  break;
     case "ArrowRight":if(direction != "LEFT")  direction = "RIGHT"; break;
     case "ArrowLeft": if(direction != "RIGHT") direction = "LEFT";  break;
    }
-}
+};
 
 function init(){    
 
@@ -170,7 +155,10 @@ function newSnakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
    this.currentRow = aCurrentRow;
    this.currentCol = aCurrentCol;
    this.currentDir = aCurrentDir;
-}
+};
 
+function snakeInit(){
+
+};
 
 init();
