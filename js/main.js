@@ -2,37 +2,24 @@
 var rowSize = 8;
 var colSize = 8;
 
-var snakeArr = [];
-
-var first = {   
-   path :  document.getElementById('first'),
-   currentRow: 2,
-   currentCol: 3,
-   currentDir: "UP"
-};
-
-var second = {   
-   path :  document.getElementById('second'),
-   currentRow: 3,
-   currentCol: 3,
-   currentDir: "UP"
-};
-
-var third = {   
-   path :  document.getElementById('third'),
-   currentRow: 4,
-   currentCol: 3,
-   currentDir: "UP"
-};
-
-snakeArr.push(first);
-snakeArr.push(second);
-snakeArr.push(third);
-
 var grid = document.getElementsByClassName('grid')[0];
 var fps = 1000/30;
 var frameNum = 0;
-var direction = "UP";
+var direction = "UP";//initial direction
+
+function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
+   this.path = aPath;
+   this.currentRow = aCurrentRow;
+   this.currentCol = aCurrentCol || 3;
+   this.currentDir = aCurrentDir || "UP";
+};
+
+var snakeArr = [];
+function snakeInit(){    
+    snakeArr.push(new snakeElement(document.getElementById('first'),  2));
+    snakeArr.push(new snakeElement(document.getElementById('second'), 3))
+    snakeArr.push(new snakeElement(document.getElementById('third'),  4))
+};
 
 function setDirection(){   
   for(var i = snakeArr.length -1; i > 0; i-- )  snakeArr[i].currentDir = snakeArr[i-1].currentDir;
@@ -127,38 +114,25 @@ function cooseDir(e){
 };
 
 function init(){    
-
+   snakeInit();
    document.addEventListener("keydown", cooseDir, false);
-
-   requestAnimationFrame(snakeMove);   
-
+   requestAnimationFrame(snakeMove);
 };
 
 function simpleMove(){  
    if(frameNum > fps){
-     first.style.backgroundColor = "#ccc";       
-   
-     switch(direction){
-       case "UP":    first = upMove(first);    break;
-       case "DOWN":  first = downMove(first);  break;
-       case "RIGHT": first = rightMove(first); break;
-       case "LEFT":  first = leftMove(first);  break;
-     }
-     first.style.backgroundColor="#777";
-     frameNum=0;
-   } else  frameNum++;
-     requestAnimationFrame(simpleMove);
+     first.style.backgroundColor = "#ccc";   
+   switch(direction){
+     case "UP":    first = upMove(first);    break;
+     case "DOWN":  first = downMove(first);  break;
+     case "RIGHT": first = rightMove(first); break;
+     case "LEFT":  first = leftMove(first);  break;
+   }
+   first.style.backgroundColor="#777";
+   frameNum=0;
+   }else frameNum++;
+   requestAnimationFrame(simpleMove);
 };
 
-function newSnakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
-   this.path = aPath;
-   this.currentRow = aCurrentRow;
-   this.currentCol = aCurrentCol;
-   this.currentDir = aCurrentDir;
-};
-
-function snakeInit(){
-
-};
 
 init();
