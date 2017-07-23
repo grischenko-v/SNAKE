@@ -25,6 +25,6 @@
 	overflow: hidden;
 }
 
-#first, #second, #third{
+#first, #second/*, #third*/{
    background-color:  #777;
 }

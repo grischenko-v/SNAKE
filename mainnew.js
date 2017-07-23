@@ -1,89 +1,113 @@
 
-var first = document.getElementById('first');
+var snakeArr = [];
+
+var first = {   
+   path :  document.getElementById('first'),
+   currentRow: 2,
+   currentCol: 3,
+   currentDir: "UP"
+};
+
+var second = {   
+   path :  document.getElementById('second'),
+   currentRow: 3,
+   currentCol: 3,
+   currentDir: "UP"
+};
+
+
+
+
+snakeArr.push(first);
+snakeArr.push(second);
+//snakeArr.push(third);
+
+console.log(snakeArr);
+
 var grid = document.getElementsByClassName('grid')[0];
 var fps = 1000/20;
 var frameNum = 0;
-var direction = "UP";
 
 var rowSize = 8;
 var colSize = 8;
 
-var currentRow = 2;
-var currentCol = 3;
+function snakeMove(){
 
-function simpleMove(){  
-   if(frameNum > fps){
-	   first.style.backgroundColor = "#ccc";       
-   
-     switch(direction){
-       case "UP":    first = upMove(first);    break;
-       case "DOWN":  first = downMove(first);  break;
-       case "RIGHT": first = rightMove(first); break;
-       case "LEFT":  first = leftMove(first);  break;
-     }
-     first.style.backgroundColor="#777";
+if(frameNum > fps){
+  for(var i = 0; i < snakeArr.length; i++){ 
+    snakeArr[i].path.style.backgroundColor = "#ccc";   
+    switch(snakeArr[i].currentDir){
+       case "UP":    snakeArr[i] = upMove(snakeArr[i] );    break;
+       case "DOWN":  snakeArr[i]  = downMove(snakeArr[i] );  break;
+       case "RIGHT":{ snakeArr[i]  = rightMove(snakeArr[i] );    break;}
+       case "LEFT":  snakeArr[i]  = leftMove(snakeArr[i] );  break;
+     }     
+     snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
-   } else  frameNum++;
-     requestAnimationFrame(simpleMove);
+  }
+ } else  frameNum++;
+
+ requestAnimationFrame(snakeMove);
+
 };
 
-
-function rightMove(element){     
-    if(currentCol < colSize){
-      currentCol++; 
-      element = element.nextElementSibling;  
-    }else while(currentCol !== 0) {
-      currentCol--;     
-      element = element.previousElementSibling;
+function rightMove(element){   
+      console.log("move");
+    if(element.currentCol < colSize){
+      element.currentCol++; 
+      element.path = element.path.nextElementSibling;  
+    }else while(element.currentCol !== 0) {
+      element.currentCol--;     
+      element.path = element.path.previousElementSibling;
     }
     return element;
 };
 
 function leftMove(element){
-    if(currentCol > 0){
-      currentCol--; 
-      element = element.previousElementSibling;  
-    }else while(currentCol !== colSize) {
-      currentCol++;     
-      element = element.nextElementSibling;
+    if(element.currentCol > 0){
+      element.currentCol--; 
+      element.path = element.path.previousElementSibling;  
+    }else while(element.currentCol !== colSize) {
+      element.currentCol++;     
+      element.path = element.path.nextElementSibling;
     }
     return element;
 };
 
 function upMove(element){
  var i = 0;
- if(currentRow > 0){
+ if(element.currentRow > 0){
     while (i <= rowSize){ 
       i++;     
-      element = element.previousElementSibling;  
+      element.path = element.path.previousElementSibling;  
     }
-    currentRow--;
+    element.currentRow--;
  }
  else{
    while (i <= rowSize * (rowSize +  1) - 1){ 
       i++;
-        element = element.nextElementSibling;
+        element.path = element.path.nextElementSibling;
   }
-  currentRow = 8;
+  element.currentRow = 8;
  }   
  return element;
 };
 
 function downMove(element){
  var i = 0;
- if(currentRow < rowSize){
+ if(element.currentRow < rowSize){
     while (i <= rowSize){ 
       i++;      
-      element = element.nextElementSibling;  
+      element.path = element.path.nextElementSibling;  
     }
-    currentRow++;
+    element.currentRow++;
  }
  else{
    while (i <= rowSize*(rowSize + 1) - 1){ 
       i++;
-        element = element.previousElementSibling;
+        element.path = element.path.previousElementSibling;
   }
-  currentRow = 0;
+  element.currentRow = 0;
  }   
  return element;
 };
@@ -97,12 +121,36 @@ function cooseDir(e){
    }
 }
 
-function init(){
-    
+function init(){    
+
    document.addEventListener("keydown", cooseDir, false);
 
-   requestAnimationFrame(simpleMove);   
+   requestAnimationFrame(snakeMove);   
 
 };
+
+function simpleMove(){  
+   if(frameNum > fps){
+     first.style.backgroundColor = "#ccc";       
+   
+     switch(direction){
+       case "UP":    first = upMove(first);    break;
+       case "DOWN":  first = downMove(first);  break;
+       case "RIGHT": first = rightMove(first); break;
+       case "LEFT":  first = leftMove(first);  break;
+     }
+     first.style.backgroundColor="#777";
+     frameNum=0;
+   } else  frameNum++;
+     requestAnimationFrame(simpleMove);
+};
+
+function newSnakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
+   this.path = aPath;
+   this.currentRow = aCurrentRow;
+   this.currentCol = aCurrentCol;
+   this.currentDir = aCurrentDir;
+}
+
 
 init();
