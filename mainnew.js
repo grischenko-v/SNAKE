@@ -1,16 +1,23 @@
 
 var first = document.getElementById('first');
 var grid = document.getElementsByClassName('grid')[0];
-var fps = 1000/60;
+var fps = 1000/20;
 var frameNum = 0;
 var direction = "UP";
+
+var rowSize = 8;
+var colSize = 8;
+
+var curentRow = 2;
+var currentCol = 3;
+
 
 function simpleMove(){  
    if(frameNum > fps){
 	   first.style.backgroundColor = "#ccc";       
 
-       first = first.nextElementSibling != null ? first.nextElementSibling : grid.firstElementChild;
-
+      // first = first.nextElementSibling != null ? first.nextElementSibling : grid.firstElementChild;
+      first = leftMove(first);
 
        first.style.backgroundColor="#777";
        frameNum=0;
@@ -19,12 +26,28 @@ function simpleMove(){
 };
 
 
-function rightMove(element){
-
+function rightMove(element){     
+    if(currentCol < colSize){
+      currentCol++; 
+      element = element.nextElementSibling;  
+    }else while(currentCol !== 0) {
+      currentCol--;     
+      element = element.previousElementSibling;
+    }
+    return element;
 };
 
-function leftMove(element){
 
+
+function leftMove(element){
+    if(currentCol > 0){
+      currentCol--; 
+      element = element.previousElementSibling;  
+    }else while(currentCol !== colSize) {
+      currentCol++;     
+      element = element.nextElementSibling;
+    }
+    return element;
 };
 
 function upMove(element){
