@@ -1,4 +1,4 @@
-####Controls
+#### Controls
 - press UpArrow for move snake up
 - press DownArrow for move snake down
 - press LeftArrow for move snake left
