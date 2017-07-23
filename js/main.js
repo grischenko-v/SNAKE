@@ -3,7 +3,8 @@ var rowSize = 8;
 var colSize = 8;
 
 var grid = document.getElementsByClassName('grid')[0];
-var fps = 1000/30;
+var speed = 35;
+var fps = 1000 / speed;
 var frameNum = 0;
 var direction = "UP";//initial direction
 
@@ -29,13 +30,15 @@ function setDirection(){
 function snakeMove(){
 if(frameNum > fps){
   setDirection();
+  
+
   for(var i = 0; i < snakeArr.length; i++){ 
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
        case "UP":    snakeArr[i] = upMove(snakeArr[i] );    break;
-       case "DOWN":  snakeArr[i]  = downMove(snakeArr[i] );  break;
-       case "RIGHT":{ snakeArr[i]  = rightMove(snakeArr[i] );    break;}
-       case "LEFT":  snakeArr[i]  = leftMove(snakeArr[i] );  break;
+       case "DOWN":  snakeArr[i] = downMove(snakeArr[i] );  break;
+       case "RIGHT": snakeArr[i] = rightMove(snakeArr[i] ); break;
+       case "LEFT":  snakeArr[i] = leftMove(snakeArr[i] );  break;
      }     
      snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
@@ -114,25 +117,31 @@ function cooseDir(e){
 };
 
 function init(){    
-   snakeInit();
+   snakeInit();  
+   createPoint(); 
    document.addEventListener("keydown", cooseDir, false);
    requestAnimationFrame(snakeMove);
 };
 
-function simpleMove(){  
-   if(frameNum > fps){
-     first.style.backgroundColor = "#ccc";   
-   switch(direction){
-     case "UP":    first = upMove(first);    break;
-     case "DOWN":  first = downMove(first);  break;
-     case "RIGHT": first = rightMove(first); break;
-     case "LEFT":  first = leftMove(first);  break;
-   }
-   first.style.backgroundColor="#777";
-   frameNum=0;
-   }else frameNum++;
-   requestAnimationFrame(simpleMove);
+function createPoint(){
+  var pointRow = getRandomInt(0, 8);
+  var pointCol = getRandomInt(0, 8);
+  var i = 0;
+  var point = grid.firstElementChild;
+  console.log("pointRow: " + pointRow + " pointCol: " + pointCol);
+  console.log(point);
+  while(i < (pointRow + 1) * (pointCol + 1) ){
+   point = point.nextElementSibling;
+   i++;
+  } 
+  console.log(point);
+  point.style.backgroundColor = "red";
+
 };
+
+function getRandomInt(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 init();
