@@ -7,7 +7,7 @@ var speed = 35;
 var fps = 1000 / speed;
 var frameNum = 0;
 var direction = "UP";//initial direction
-var controls = new snakeControl();
+var control;
 
 
 function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
@@ -37,10 +37,10 @@ if(frameNum > fps){
   for(var i = 0; i < snakeArr.length; i++){ 
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
-       case "UP":    snakeArr[i] = controls.upMove(snakeArr[i] );    break;
-       case "DOWN":  snakeArr[i] = controls.downMove(snakeArr[i] );  break;
-       case "RIGHT": snakeArr[i] = controls.rightMove(snakeArr[i] ); break;
-       case "LEFT":  snakeArr[i] = controls.leftMove(snakeArr[i] );  break;
+       case "UP":    snakeArr[i] = control.upMove(snakeArr[i] );    break;
+       case "DOWN":  snakeArr[i] = control.downMove(snakeArr[i] );  break;
+       case "RIGHT": snakeArr[i] = control.rightMove(snakeArr[i] ); break;
+       case "LEFT":  snakeArr[i] = control.leftMove(snakeArr[i] );  break;
      }     
      snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
@@ -58,7 +58,8 @@ function cooseDir(e){
    }
 };
 
-function init(){    
+function init(){  
+   control = new snakeControl();  
    snakeInit();  
    createPoint(); 
 
@@ -67,23 +68,19 @@ function init(){
 };
 
 function createPoint(){
-  var pointRow = getRandomInt(0, 0);
-  var pointCol = getRandomInt(0, 0);
+  var pointRow = getRandomInt(0, 8);
+  var pointCol = getRandomInt(0, 8);
   var i = 0;
   var point = grid.firstElementChild;
-  console.log("pointRow: " + pointRow + " pointCol: " + pointCol);
-  while(i < (pointRow + 1) * (pointCol + 1) ){
-   point = point.nextElementSibling;
-   i++;
-  } 
-  console.log(point);
+  while(i <= (pointCol ) * colSize + pointCol + pointRow - 1){
+    point = point.nextElementSibling;
+    i++;
+  }
   point.style.backgroundColor = "red";
-
 };
 
 function getRandomInt(min, max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 
 init();
