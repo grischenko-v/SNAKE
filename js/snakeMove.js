@@ -7,7 +7,7 @@ function snakeControl(){
                    }else while(element.currentCol !== 0) {
                       element.currentCol--;     
                       element.path = element.path.previousElementSibling;
-                   }
+                   }                   
                    return element;
                  },
       leftMove:  function (element){
