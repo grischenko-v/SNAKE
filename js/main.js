@@ -9,6 +9,7 @@ var frameNum = 0;
 var direction = "UP";//initial direction
 var control;
 
+var foodTimer = 0;
 
 function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
    this.path = aPath;
@@ -43,8 +44,13 @@ if(frameNum > fps){
      isFood(snakeArr[i].path);
      snakeArr[i].path.style.backgroundColor="#777";
      frameNum=0;
+     foodTimer++;
   }
  } else  frameNum++;
+ if(foodTimer > 50){
+    createPoint();
+    foodTimer = 0;
+ }
  requestAnimationFrame(snakeMove);
 };
 
@@ -60,16 +66,14 @@ function cooseDir(e){
 function init(){  
    control = new snakeControl();  
    snakeInit();
-
-   createPoint(); 
-
+   createPoint();
    document.addEventListener("keydown", cooseDir, false);
    requestAnimationFrame(snakeMove);
 };
 
 function createPoint(){ 
-  var pointCol = getRandomInt(3, 3);
-  var pointRow = getRandomInt(2, 2);
+  var pointCol = getRandomInt(0, 8);
+  var pointRow = getRandomInt(0, 8);
   while(!checkPointLocation(pointCol, pointRow)){
     pointRow = getRandomInt(0, 8);
     pointCol = getRandomInt(0, 8);
