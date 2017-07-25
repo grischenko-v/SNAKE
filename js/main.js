@@ -21,8 +21,8 @@ function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
 var snakeArr = [];
 function snakeInit(){    
     snakeArr.push(new snakeElement(document.getElementById('first'),  2));
-    snakeArr.push(new snakeElement(document.getElementById('second'), 3))
-    snakeArr.push(new snakeElement(document.getElementById('third'),  4))
+    snakeArr.push(new snakeElement(document.getElementById('second'), 3));
+    snakeArr.push(new snakeElement(document.getElementById('third'),  4));
 };
 
 function setDirection(){   
@@ -30,9 +30,7 @@ function setDirection(){
   snakeArr[0].currentDir = direction;
 }
 
-function snakeMove(){
-if(frameNum > fps){
-  setDirection();
+function chooseSnakeDir(){
   for(var i = 0; i < snakeArr.length; i++){ 
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
@@ -40,18 +38,24 @@ if(frameNum > fps){
        case "DOWN":  snakeArr[i] = control.downMove(snakeArr[i] );  break;
        case "RIGHT": snakeArr[i] = control.rightMove(snakeArr[i] ); break;
        case "LEFT":  snakeArr[i] = control.leftMove(snakeArr[i] );  break;
-     }     
-     isFood(snakeArr[i].path);
-     snakeArr[i].path.style.backgroundColor="#777";
-     frameNum=0;
-     foodTimer++;
-  }
- } else  frameNum++;
- if(foodTimer > 50){
-    createPoint();
-    foodTimer = 0;
- }
- requestAnimationFrame(snakeMove);
+    }
+    isFood(snakeArr[i].path, snakeArr[i].currentCol, snakeArr[i].currentRow, snakeArr[i].currentDir);
+    snakeArr[i].path.style.backgroundColor="#777";
+  } 
+};
+
+function mainLoop(){
+if(frameNum > fps){
+  setDirection();
+  frameNum=0;
+  foodTimer++;
+  chooseSnakeDir()
+}else  frameNum++;
+if(foodTimer === 25){
+  createPoint();
+  foodTimer = 0;
+}
+requestAnimationFrame(mainLoop);
 };
 
 function cooseDir(e){
@@ -68,7 +72,7 @@ function init(){
    snakeInit();
    createPoint();
    document.addEventListener("keydown", cooseDir, false);
-   requestAnimationFrame(snakeMove);
+   requestAnimationFrame(mainLoop);
 };
 
 function createPoint(){ 
@@ -96,14 +100,13 @@ function checkPointLocation(c,r){
     return true;
 };
 
-function isFood(elem){
+function isFood(elem, col, row, dir){
   if(elem.hasAttribute("food")){
-          console.log("eat");  
+          console.log("eat" + " " + col + " " + row + " " + dir);  
+          //snakeArr.push(new snakeElement(elem,  row, col, dir));
           elem.removeAttribute("food");
   }
-
 };
-
 
 function getRandomInt(min, max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
