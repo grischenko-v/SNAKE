@@ -3,23 +3,19 @@ var rowSize = 8;
 var colSize = 8;
 
 var grid = document.getElementsByClassName('grid')[0];
-console.log(typeof document.getElementById('first'));
 var speed = 35;
 var fps = 1000 / speed;
 var frameNum = 0;
 var direction = "UP";//initial direction
 var control;
-
 var foodTimer = 0;
 
-function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){
-  console.log(aPath);
+function snakeElement(aPath, aCurrentRow, aCurrentCol, aCurrentDir){ 
    this.path = aPath;
    this.currentRow = aCurrentRow;
    this.currentCol = aCurrentCol || 3;
    this.currentDir = aCurrentDir || "UP";
    this.path.style.backgroundColor = "#777";  
-
 };
 
 var snakeArr = [];
@@ -35,10 +31,6 @@ function setDirection(){
 }
 
 function chooseSnakeDir(){
-
-isFood(snakeArr[snakeArr.length-1].path, snakeArr[snakeArr.length-1].currentCol,
-          snakeArr[snakeArr.length-1].currentRow, snakeArr[snakeArr.length-1].currentDir);
-
   for(var i = 0; i < snakeArr.length; i++){ 
     snakeArr[i].path.style.backgroundColor = "#ccc";   
     switch(snakeArr[i].currentDir){
@@ -51,24 +43,25 @@ isFood(snakeArr[snakeArr.length-1].path, snakeArr[snakeArr.length-1].currentCol,
   }  
 };
 
-function mainLoop(){
-  
-if(frameNum > fps){
-  setDirection();
-  chooseSnakeDir();
-  frameNum=0;
-  foodTimer++;    
-}else frameNum++;
-
-if(foodTimer === 25){  
-  createPoint();
-  foodTimer = 0;
-}
-requestAnimationFrame(mainLoop);
+function mainLoop(){  
+  if(frameNum > fps){
+    isFood(snakeArr[snakeArr.length-1].path,
+          snakeArr[snakeArr.length-1].currentCol,
+          snakeArr[snakeArr.length-1].currentRow,
+          snakeArr[snakeArr.length-1].currentDir);
+    setDirection();
+    chooseSnakeDir();
+    frameNum=0;
+    foodTimer++;    
+  }else frameNum++;
+  if(foodTimer === 25){  
+    createPoint();
+    foodTimer = 0;
+  }
+  requestAnimationFrame(mainLoop);
 };
 
 function cooseDir(e){
-
    switch(e.key){
     case "ArrowUp":   if(direction != "DOWN")  direction = "UP";    break;
     case "ArrowDown": if(direction != "UP")    direction = "DOWN";  break;
@@ -112,55 +105,47 @@ function checkPointLocation(c,r){
 
 function isFood(elem, col, row, dir){
   var temp;
-  var tempElem = elem;
-
+  var tempElem;
+  
   if(elem.hasAttribute("food")){
-          elem.removeAttribute("food");
-           switch (dir){
-                 case "UP":  {
-                        for(let i = 0; i <= colSize; i++) tempElem = tempElem.nextElementSibling;
-                        temp = new snakeElement(tempElem, 
-                                                snakeArr[snakeArr.length-1].currentRow + 1,
-                                                snakeArr[snakeArr.length-1].currentCol ,
-                                                snakeArr[snakeArr.length-1].currentDir);
-                        break;};
-            case "DOWN": {
-                        for(let i = 0; i <= colSize; i++) tempElem = tempElem.previousElementSibling;
-                        temp = new snakeElement(tempElem, 
-                                                snakeArr[snakeArr.length-1].currentRow - 1,
-                                                snakeArr[snakeArr.length-1].currentCol ,
-                                                snakeArr[snakeArr.length-1].currentDir);
-                        break;};
-            case "LEFT":  {
-                        tempElem = tempElem.nextElementSibling;
-                        temp = new snakeElement(tempElem, 
-                                                snakeArr[snakeArr.length-1].currentRow ,
-                                                snakeArr[snakeArr.length-1].currentCol + 1,
-                                                snakeArr[snakeArr.length-1].currentDir);
-                        break;};
-            case "RIGHT":  {
-                        empElem = tempElem.previousElementSibling;
-                        temp = new snakeElement(tempElem, 
-                                                snakeArr[snakeArr.length-1].currentRow,
-                                                snakeArr[snakeArr.length-1].currentCol + 1,
-                                                snakeArr[snakeArr.length-1].currentDir);
-                        break;};
-           }
-       
-
-           
-       
-
-          console.log(elem + " " + snakeArr[snakeArr.length-1].currentRow  + " " + 
-            snakeArr[snakeArr.length-1].currentCol
-           + " " + dir);  
-          console.log(temp);
-          console.log(snakeArr[0]);
+    
+    tempElem = elem;
+    
+    elem.removeAttribute("food");
+    switch (dir){
+        case "UP":  {
+                for(let i = 0; i <= colSize; i++) tempElem = tempElem.nextElementSibling;
+                temp = new snakeElement(tempElem, 
+                                        snakeArr[snakeArr.length-1].currentRow + 1,
+                                        snakeArr[snakeArr.length-1].currentCol ,
+                                        snakeArr[snakeArr.length-1].currentDir);
+                break;};
+        case "DOWN": {
+                for(let i = 0; i <= colSize; i++) tempElem = tempElem.previousElementSibling;
+                temp = new snakeElement(tempElem, 
+                                        snakeArr[snakeArr.length-1].currentRow - 1,
+                                        snakeArr[snakeArr.length-1].currentCol ,
+                                        snakeArr[snakeArr.length-1].currentDir);
+                break;};
+        case "LEFT":  {
+                tempElem = tempElem.nextElementSibling;
+                temp = new snakeElement(tempElem, 
+                                        snakeArr[snakeArr.length-1].currentRow ,
+                                        snakeArr[snakeArr.length-1].currentCol + 1,
+                                        snakeArr[snakeArr.length-1].currentDir);
+                break;};
+        case "RIGHT":  {
+                empElem = tempElem.previousElementSibling;
+                temp = new snakeElement(tempElem, 
+                                        snakeArr[snakeArr.length-1].currentRow,
+                                        snakeArr[snakeArr.length-1].currentCol + 1,
+                                        snakeArr[snakeArr.length-1].currentDir);
+                break;};
+           }  
+        console.log(temp);
          snakeArr.push(temp);
-          console.log(snakeArr);
         
-
-  }
+           }
 };
 
 function getRandomInt(min, max){
