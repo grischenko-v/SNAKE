@@ -17,7 +17,7 @@ function snakeControl(){
                    }else while(element.currentCol !== colSize) {
                       element.currentCol++;     
                       element.path = element.path.nextElementSibling;
-                   }
+                   }                          
                    return element;
                  },
       upMove:    function upMove(element){
@@ -35,6 +35,7 @@ function snakeControl(){
                       }
                       element.currentRow = 8;
                    }   
+          
                    return element;
                  },
       downMove:  function downMove(element){
