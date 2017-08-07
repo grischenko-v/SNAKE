@@ -43,6 +43,8 @@ function chooseSnakeDir(){
   }  
 };
 
+
+var notEat = true;
 function mainLoop(){  
   if(frameNum > fps){
     isFood(snakeArr[snakeArr.length-1].path,
@@ -51,14 +53,17 @@ function mainLoop(){
           snakeArr[snakeArr.length-1].currentDir);
     setDirection();
     chooseSnakeDir();
+
+    gameEnd();
+
     frameNum=0;
     foodTimer++;    
   }else frameNum++;
   if(foodTimer === 25){  
-    createPoint();
+    if(!notEat) createPoint();
     foodTimer = 0;
   }
-  requestAnimationFrame(mainLoop);
+  if(!youLose)requestAnimationFrame(mainLoop);
 };
 
 function cooseDir(e){
@@ -108,7 +113,7 @@ function isFood(elem, col, row, dir){
   var tempElem;
   
   if(elem.hasAttribute("food")){
-    
+    notEat = false;
     tempElem = elem;
     
     elem.removeAttribute("food");
@@ -150,6 +155,19 @@ function isFood(elem, col, row, dir){
 
 function getRandomInt(min, max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var youLose = false;
+function gameEnd(){
+   for(var i = 1; i < snakeArr.length; i++){
+          if(snakeArr[0].path == snakeArr[i].path){
+           //console.log("lose");
+           youLose = true;
+           grid.style.backgroundColor = "red";
+           break;
+          }
+   }
+    
 }
 
 init();
