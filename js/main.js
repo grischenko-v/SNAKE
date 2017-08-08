@@ -3,7 +3,7 @@ var rowSize = 8;
 var colSize = 8;
 
 var grid = document.getElementsByClassName('grid')[0];
-var speed = 35;
+var speed = 45;
 var fps = 1000 / speed;
 var frameNum = 0;
 var direction = "UP";//initial direction
@@ -59,7 +59,7 @@ function mainLoop(){
     frameNum=0;
     foodTimer++;    
   }else frameNum++;
-  if(foodTimer === 25){  
+  if(foodTimer === 45){  
     if(!notEat) createPoint();
     foodTimer = 0;
   }
@@ -84,7 +84,7 @@ function init(){
 };
 
 function createPoint(){ 
-  var pointCol = getRandomInt(0, 8);
+  var pointCol = getRandomInt(8, 8);
   var pointRow = getRandomInt(0, 8);
   while(!checkPointLocation(pointCol, pointRow)){
     pointRow = getRandomInt(0, 8);
@@ -111,11 +111,12 @@ function checkPointLocation(c,r){
 function isFood(elem, col, row, dir){
   var temp;
   var tempElem;
-  
+  var rempCol;
   if(elem.hasAttribute("food")){
     notEat = false;
     tempElem = elem;
-    
+    tempCol = col;
+    var i =0;
     elem.removeAttribute("food");
     switch (dir){
         case "UP":  {
@@ -133,10 +134,19 @@ function isFood(elem, col, row, dir){
                                         snakeArr[snakeArr.length-1].currentDir);
                 break;};
         case "LEFT":  {
-                tempElem = tempElem.nextElementSibling;
+          console.log(tempCol);
+
+                 if(tempCol < 8)
+                  tempElem = tempElem.nextElementSibling;
+                 else while (i < 8 ){
+                          i++;
+                          // tempCol = 8;
+                          tempElem = tempElem.previousElementSibling;
+                  }
+
                 temp = new snakeElement(tempElem, 
                                         snakeArr[snakeArr.length-1].currentRow ,
-                                        snakeArr[snakeArr.length-1].currentCol + 1,
+                                        tempCol,
                                         snakeArr[snakeArr.length-1].currentDir);
                 break;};
         case "RIGHT":  {
@@ -149,7 +159,7 @@ function isFood(elem, col, row, dir){
            }  
         console.log(temp);
          snakeArr.push(temp);
-        
+         youLose = true;
            }
 };
 
