@@ -1,31 +1,51 @@
-* {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+*{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.container{
+  width: 300px;
+  height: 350px; 
+  margin: auto;
 }
 .grid{
-    border: 1px solid #ccc;
-    height: 204px;
-    width: 212px;
-    margin: auto;
-    margin-top: 100px;
-    padding: 5px;  
-    background-color: #aaa;
-    border-radius: 1px;
+  border: 1px solid #ccc;
+  height: 204px;
+  width: 212px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 5px;  
+  background-color: #aaa;
+  border-radius: 1px;
 }
 .element{
-	display: inline-block;
-	background-color:  #ccc;
-    margin: 0;
-    padding: 0;
-	height: 20px;
-	width: 20px;
-	border:1px solid #ddd;
-	border-radius: 1px;
-	box-sizing: border-box;
-	overflow: hidden;
+  display: inline-block;
+  background-color:  #ccc;
+  margin: 0;
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  border:1px solid #ddd;
+  border-radius: 1px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-
-first, second, third{
-   background-color:  #777;
+.score{
+  width: 212px;
+  height: 60px;
+  margin: auto;
+  padding-top: 15px;
+  font-size: 20px;
+  font-weight: bold;    
+}
+.score span:first-child{
+  float: left;    
+}
+.resualt{
+  float: right;
+}
+.lose{
+  color: red;
+  text-align: center;
+  font-size: 18px;
 }
