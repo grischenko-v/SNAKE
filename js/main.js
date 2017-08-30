@@ -90,8 +90,8 @@ function init(){
 };
 
 function createPoint(){ 
-  var pointCol = getRandomInt(0, 8);
-  var pointRow = getRandomInt(0, 7);//bug
+  var pointCol = getRandomInt(1, 7);
+  var pointRow = getRandomInt(1, 7);//bug
   while(!checkPointLocation(pointCol, pointRow)){
     pointRow = getRandomInt(1, 7);
     pointCol = getRandomInt(1, 7);
