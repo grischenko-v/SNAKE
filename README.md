@@ -1,10 +1,19 @@
-#### Controls
-- press UpArrow for move snake up
-- press DownArrow for move snake down
-- press LeftArrow for move snake left
-- press RightArrow for move snake right
-
+![screenshot of sample](https://grischenko-v.github.io/SNAKE/screen.png)
+##
+#### Contorols:
+###### -press UpArrow for move snake up.
+###### -press DownArrow for move snake down.
+###### -press press LeftArrow for move snake left.
+###### -press RightArrow for move snake right.
+##
+#### Demo:
+###### https://grischenko-v.github.io/SNAKE/index.html
+##
 #### Technologies
-- Vanila JS
-- HTML5, CSS3
-
+###### - Vanila JS
+###### - HTML5, CSS3
+##
+#### Browsers support
+###### - Chrome
+###### - FF
+###### - IE11
