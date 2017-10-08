@@ -1,4 +1,4 @@
-![screenshot of sample](https://grischenko-v.github.io/SNAKE/screen.png)
+![screenshot of sample](https://grischenko-v.github.io/SNAKE/img/screen.png)
 ##
 #### Contorols:
 ###### -press UpArrow for move snake up.
